@@ -34,7 +34,7 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
    * refreshProperties
    * @description Gets the actual values for any selected properties, along with critical field metadata and ultimately re-sets the pagePropValues state
    */
-  async function refreshProperties () {
+  async function refreshProperties() {
     var newSetOfValues: PageProperty[] = [];
 
     if (props.selectedProperties !== undefined && props.selectedProperties !== null) {
@@ -78,7 +78,7 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
         newSetOfValues.push({ info: field, values: [...values] });
       }
 
-      setPagePropValues({...newSetOfValues});
+      setPagePropValues({ ...newSetOfValues });
     }
   }
 
@@ -102,15 +102,15 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
     if (pagePropValues !== undefined && pagePropValues !== null) {
       var retVal = _.map(pagePropValues, (prop) => {
         return (
-            <>
-              <div className={styles.propNameRow}>{prop.info.Title}<span style={{display: 'none'}}> - {prop.info.TypeAsString}</span></div>
-              <div className={styles.propValsRow}>
-                {RenderPagePropValue(prop)}
-              </div>
-            </>
-          );
+          <div className={props.propertydirection === "Horizontal" ? styles.propRow : ""}>
+            <div className={styles.propNameRow}>{prop.info.Title}<span style={{ display: 'none' }}> - {prop.info.TypeAsString}</span></div>
+            <div className={styles.propValsRow}>
+              {RenderPagePropValue(prop)}
+            </div>
+          </div>
+        );
       });
-      return retVal;
+      return <>{retVal}</>;
     } else {
       return <i>Nothing to display</i>;
     }
@@ -122,14 +122,14 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
    * @param prop
    * @returns
    */
-   const RenderPagePropValue = (prop: PageProperty) => {
+  const RenderPagePropValue = (prop: PageProperty) => {
     console.log(prop);
     var retVal = _.map(prop.values, (val) => {
       if (val !== null) {
         switch (prop.info.TypeAsString) {
           case "URL":
             return (
-              <span className={styles.urlValue}><a href={val.Url} target="_blank" style={{color: semanticColors.link}}>{val.Description}</a></span>
+              <span className={styles.urlValue}><a href={val.Url} target="_blank" style={{ color: semanticColors.link }}>{val.Description}</a></span>
             );
           case "Thumbnail":
             return (
@@ -137,7 +137,7 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
             );
           case "Number":
             return (
-              <span className={styles.plainValue}>{(prop.info["ShowAsPercentage"] === true ? Number(val).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:0}) : (prop.info["CommaSeparator"] === true ? val.toLocaleString('en') : val.toString()))}</span>
+              <span className={styles.plainValue}>{(prop.info["ShowAsPercentage"] === true ? Number(val).toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 0 }) : (prop.info["CommaSeparator"] === true ? val.toLocaleString('en') : val.toString()))}</span>
             );
           case "Currency":
             return (
@@ -171,11 +171,11 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
           case "TaxonomyFieldTypeMulti":
           case "TaxonomyFieldType":
             return (
-              <span className={styles.standardCapsule} style={{backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText}}>{val.Label}</span>
+              <span className={styles.standardCapsule} style={{ backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText }}>{val.Label}</span>
             );
           default:
             return (
-              <span className={styles.standardCapsule} style={{backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText}}>{val}</span>
+              <span className={styles.standardCapsule} style={{ backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText }}>{val}</span>
             );
         }
       } else {
@@ -199,9 +199,10 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
   };
 
   return (
-    <div className={`${styles.advancedPageProperties} ${styles.container}`} style={{backgroundColor: semanticColors.bodyBackground, color: semanticColors.bodyText}}>
+    <div className={`${styles.advancedPageProperties} ${styles.container}`} style={{ backgroundColor: semanticColors.bodyBackground, color: semanticColors.bodyText }}>
       {RenderTitle()}
       {RenderPageProperties()}
+      <br style={{clear:'both'}} />
     </div>
   );
 };

@@ -24,6 +24,7 @@ import {
 export interface IAdvancedPagePropertiesWebPartProps {
   title: string;
   selectedProperties: string[];
+  propertydirection: string;
 }
 
 export default class AdvancedPagePropertiesWebPart extends BaseClientSideWebPart<IAdvancedPagePropertiesWebPartProps> {
@@ -59,7 +60,8 @@ export default class AdvancedPagePropertiesWebPart extends BaseClientSideWebPart
         context: this.context,
         title: this.properties.title,
         selectedProperties: this.properties.selectedProperties,
-        themeVariant: this._themeVariant
+        themeVariant: this._themeVariant,
+        propertydirection: this.properties.propertydirection
       }
     );
 
@@ -86,9 +88,9 @@ export default class AdvancedPagePropertiesWebPart extends BaseClientSideWebPart
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 
-  protected get dataVersion(): Version {
-    return Version.parse('1.0');
-  }
+  // protected get dataVersion(): Version {
+  //   return Version.parse('1.0');
+  // }
 
   protected onAddButtonClick (value: any) {
     this.properties.selectedProperties.push(this.availableProperties[0].key.toString());
@@ -121,6 +123,11 @@ export default class AdvancedPagePropertiesWebPart extends BaseClientSideWebPart
     var propDrops: IPropertyPaneField<any>[] = [];
     propDrops.push(PropertyPaneTextField('title', {
       label: strings.TitleFieldLabel
+    }));
+    propDrops.push(PropertyPaneDropdown(`propertydirection`,
+    {
+      label: strings.PropertyDirection,
+      options: [{key: "Horizontal", text: "Horizontal"},{key: "Vertical", text: "Vertical"}],
     }));
     propDrops.push(PropertyPaneHorizontalRule());
     // Determine how many page property dropdowns we currently have

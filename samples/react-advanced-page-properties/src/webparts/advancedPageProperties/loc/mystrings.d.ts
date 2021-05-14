@@ -6,6 +6,7 @@ declare interface IAdvancedPagePropertiesWebPartStrings {
   PropPaneAddButtonText: string;
   PropPaneDeleteButtonText: string;
   LogAppName: string;
+  PropertyDirection: string;
 }
 
 declare module 'AdvancedPagePropertiesWebPartStrings' {

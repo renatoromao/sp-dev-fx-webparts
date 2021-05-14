@@ -6,6 +6,7 @@ define([], function() {
     "SelectedPropertiesFieldLabel": "Property",
     "PropPaneAddButtonText": "Add",
     "PropPaneDeleteButtonText": "Delete",
-    "LogAppName": "APP"
+    "LogAppName": "APP",
+    "PropertyDirection": "Properties Direction"
   }
 });
